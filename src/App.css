@@ -24,15 +24,16 @@
   inset: 0;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   pointer-events: none;
   opacity: 0;
-  padding: 0 6rem;
+  padding: 0 2rem;
 }
 .sphere-headline {
   line-height: 0.9;
   margin-bottom: 3rem;
+  text-align: center;
 }
 .sphere-headline .word-social {
   display: block;
@@ -51,7 +52,7 @@
 .sphere-subtitle {
   font-size: 1.125rem;
   color: rgba(0,0,0,0.5);
-  text-align: left;
+  text-align: center;
   max-width: 480px;
   line-height: 1.7;
   margin-bottom: 48px;
