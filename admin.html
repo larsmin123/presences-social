@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>presences.social - Admin CMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f5f5f5;
+      color: #000;
+      line-height: 1.6;
+    }
+    
+    .header {
+      background: #000;
+      color: #fff;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .header h1 {
+      font-size: 1.25rem;
+      font-weight: 500;
+    }
+    
+    .header .version {
+      font-size: 0.75rem;
+      opacity: 0.6;
+    }
+    
+    .nav {
+      background: #fff;
+      border-bottom: 1px solid #e5e5e5;
+      padding: 0 2rem;
+      display: flex;
+      gap: 2rem;
+    }
+    
+    .nav button {
+      background: none;
+      border: none;
+      padding: 1rem 0;
+      cursor: pointer;
+      font-size: 0.875rem;
+      color: #666;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    
+    .nav button:hover {
+      color: #000;
+    }
+    
+    .nav button.active {
+      color: #000;
+      border-bottom-color: #000;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    .section {
+      display: none;
+    }
+    
+    .section.active {
+      display: block;
+    }
+    
+    .card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .card h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #e5e5e5;
+    }
+    
+    .field {
+      margin-bottom: 1.25rem;
+    }
+    
+    .field:last-child {
+      margin-bottom: 0;
+    }
+    
+    .field label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #666;
+      margin-bottom: 0.5rem;
+    }
+    
+    .field input,
+    .field textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.875rem;
+      transition: border-color 0.2s;
+    }
+    
+    .field input:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: #000;
+    }
+    
+    .field textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    
+    .lang-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .lang-tab {
+      padding: 0.375rem 0.75rem;
+      border: 1px solid #e5e5e5;
+      background: #fff;
+      cursor: pointer;
+      font-size: 0.75rem;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    
+    .lang-tab:hover {
+      border-color: #000;
+    }
+    
+    .lang-tab.active {
+      background: #000;
+      color: #fff;
+      border-color: #000;
+    }
+    
+    .lang-content {
+      display: none;
+    }
+    
+    .lang-content.active {
+      display: block;
+    }
+    
+    .actions {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 1px solid #e5e5e5;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .btn-primary {
+      background: #000;
+      color: #fff;
+    }
+    
+    .btn-primary:hover {
+      background: #333;
+    }
+    
+    .btn-secondary {
+      background: #fff;
+      color: #000;
+      border: 1px solid #e5e5e5;
+    }
+    
+    .btn-secondary:hover {
+      border-color: #000;
+    }
+    
+    .status {
+      font-size: 0.875rem;
+      color: #666;
+    }
+    
+    .status.success {
+      color: #22c55e;
+    }
+    
+    .status.error {
+      color: #ef4444;
+    }
+    
+    .feature-item {
+      background: #f9f9f9;
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .feature-item h3 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+      color: #666;
+    }
+    
+    .preview-link {
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.875rem;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+    
+    .preview-link:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <h1>presences.social <span style="opacity: 0.4">.social</span></h1>
+      <span class="version">CMS v1.0</span>
+    </div>
+    <a href="/" target="_blank" class="preview-link">View Website →</a>
+  </div>
+  
+  <div class="nav">
+    <button class="active" onclick="showSection('hero')">Hero</button>
+    <button onclick="showSection('philosophy')">Philosophy</button>
+    <button onclick="showSection('pipeline')">Pipeline</button>
+    <button onclick="showSection('features')">Features</button>
+    <button onclick="showSection('footer')">Footer</button>
+    <button onclick="showSection('cookie')">Cookie Banner</button>
+  </div>
+  
+  <div class="container">
+    <div id="loading" class="loading">Loading content...</div>
+    
+    <!-- Hero Section -->
+    <div id="hero" class="section">
+      <div class="card">
+        <h2>Hero Subtitle</h2>
+        <div class="lang-tabs">
+          <button class="lang-tab active" onclick="showLang('hero-subtitle', 'en')">English</button>
+          <button class="lang-tab" onclick="showLang('hero-subtitle', 'nl')">Nederlands</button>
+        </div>
+        <div id="hero-subtitle-en" class="lang-content active">
+          <div class="field">
+            <label>Subtitle (EN)</label>
+            <textarea id="hero.subtitle.en" placeholder="Enter subtitle..."></textarea>
+          </div>
+        </div>
+        <div id="hero-subtitle-nl" class="lang-content">
+          <div class="field">
+            <label>Subtitle (NL)</label>
+            <textarea id="hero.subtitle.nl" placeholder="Voer subtitle in..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Philosophy Section -->
+    <div id="philosophy" class="section">
+      <div class="card">
+        <h2>Philosophy</h2>
+        <div class="lang-tabs">
+          <button class="lang-tab active" onclick="showLang('philosophy', 'en')">English</button>
+          <button class="lang-tab" onclick="showLang('philosophy', 'nl')">Nederlands</button>
+        </div>
+        <div id="philosophy-en" class="lang-content active">
+          <div class="field">
+            <label>Title (EN)</label>
+            <input type="text" id="philosophy.title.en" placeholder="Enter title...">
+          </div>
+          <div class="field">
+            <label>Subtitle (EN)</label>
+            <input type="text" id="philosophy.subtitle.en" placeholder="Enter subtitle...">
+          </div>
+          <div class="field">
+            <label>Description (EN)</label>
+            <textarea id="philosophy.description.en" placeholder="Enter description..."></textarea>
+          </div>
+        </div>
+        <div id="philosophy-nl" class="lang-content">
+          <div class="field">
+            <label>Title (NL)</label>
+            <input type="text" id="philosophy.title.nl" placeholder="Voer titel in...">
+          </div>
+          <div class="field">
+            <label>Subtitle (NL)</label>
+            <input type="text" id="philosophy.subtitle.nl" placeholder="Voer subtitle in...">
+          </div>
+          <div class="field">
+            <label>Description (NL)</label>
+            <textarea id="philosophy.description.nl" placeholder="Voer beschrijving in..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Pipeline Section -->
+    <div id="pipeline" class="section">
+      <div class="card">
+        <h2>Pipeline</h2>
+        <div class="lang-tabs">
+          <button class="lang-tab active" onclick="showLang('pipeline', 'en')">English</button>
+          <button class="lang-tab" onclick="showLang('pipeline', 'nl')">Nederlands</button>
+        </div>
+        <div id="pipeline-en" class="lang-content active">
+          <div class="field">
+            <label>Title (EN)</label>
+            <input type="text" id="pipeline.title.en" placeholder="Enter title...">
+          </div>
+          <div class="field">
+            <label>Subtitle (EN)</label>
+            <input type="text" id="pipeline.subtitle.en" placeholder="Enter subtitle...">
+          </div>
+          <div class="field">
+            <label>Start Label (EN)</label>
+            <input type="text" id="pipeline.start.en" placeholder="Enter start label...">
+          </div>
+          <div class="field">
+            <label>End Label (EN)</label>
+            <input type="text" id="pipeline.end.en" placeholder="Enter end label...">
+          </div>
+        </div>
+        <div id="pipeline-nl" class="lang-content">
+          <div class="field">
+            <label>Title (NL)</label>
+            <input type="text" id="pipeline.title.nl" placeholder="Voer titel in...">
+          </div>
+          <div class="field">
+            <label>Subtitle (NL)</label>
+            <input type="text" id="pipeline.subtitle.nl" placeholder="Voer subtitle in...">
+          </div>
+          <div class="field">
+            <label>Start Label (NL)</label>
+            <input type="text" id="pipeline.start.nl" placeholder="Voer start label in...">
+          </div>
+          <div class="field">
+            <label>End Label (NL)</label>
+            <input type="text" id="pipeline.end.nl" placeholder="Voer eind label in...">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Features Section -->
+    <div id="features" class="section">
+      <div class="card">
+        <h2>Features Header</h2>
+        <div class="lang-tabs">
+          <button class="lang-tab active" onclick="showLang('features-header', 'en')">English</button>
+          <button class="lang-tab" onclick="showLang('features-header', 'nl')">Nederlands</button>
+        </div>
+        <div id="features-header-en" class="lang-content active">
+          <div class="field">
+            <label>Title (EN)</label>
+            <input type="text" id="features.title.en" placeholder="Enter title...">
+          </div>
+          <div class="field">
+            <label>Subtitle (EN)</label>
+            <input type="text" id="features.subtitle.en" placeholder="Enter subtitle...">
+          </div>
+        </div>
+        <div id="features-header-nl" class="lang-content">
+          <div class="field">
+            <label>Title (NL)</label>
+            <input type="text" id="features.title.nl" placeholder="Voer titel in...">
+          </div>
+          <div class="field">
+            <label>Subtitle (NL)</label>
+            <input type="text" id="features.subtitle.nl" placeholder="Voer subtitle in...">
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <h2>Feature Items</h2>
+        <div id="features-list"></div>
+      </div>
+    </div>
+    
+    <!-- Footer Section -->
+    <div id="footer" class="section">
+      <div class="card">
+        <h2>Footer</h2>
+        <div class="lang-tabs">
+          <button class="lang-tab active" onclick="showLang('footer', 'en')">English</button>
+          <button class="lang-tab" onclick="showLang('footer', 'nl')">Nederlands</button>
+        </div>
+        <div id="footer-en" class="lang-content active">
+          <div class="field">
+            <label>Tagline (EN)</label>
+            <textarea id="footer.tagline.en" placeholder="Enter tagline..."></textarea>
+          </div>
+          <div class="field">
+            <label>Contact Label (EN)</label>
+            <input type="text" id="footer.contact.en" placeholder="Enter contact label...">
+          </div>
+          <div class="field">
+            <label>Location Label (EN)</label>
+            <input type="text" id="footer.location.en" placeholder="Enter location label...">
+          </div>
+          <div class="field">
+            <label>Location Text (EN)</label>
+            <textarea id="footer.locationText.en" placeholder="Enter location text..."></textarea>
+          </div>
+        </div>
+        <div id="footer-nl" class="lang-content">
+          <div class="field">
+            <label>Tagline (NL)</label>
+            <textarea id="footer.tagline.nl" placeholder="Voer tagline in..."></textarea>
+          </div>
+          <div class="field">
+            <label>Contact Label (NL)</label>
+            <input type="text" id="footer.contact.nl" placeholder="Voer contact label in...">
+          </div>
+          <div class="field">
+            <label>Location Label (NL)</label>
+            <input type="text" id="footer.location.nl" placeholder="Voer locatie label in...">
+          </div>
+          <div class="field">
+            <label>Location Text (NL)</label>
+            <textarea id="footer.locationText.nl" placeholder="Voer locatie tekst in..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Cookie Section -->
+    <div id="cookie" class="section">
+      <div class="card">
+        <h2>Cookie Banner</h2>
+        <div class="lang-tabs">
+          <button class="lang-tab active" onclick="showLang('cookie', 'en')">English</button>
+          <button class="lang-tab" onclick="showLang('cookie', 'nl')">Nederlands</button>
+        </div>
+        <div id="cookie-en" class="lang-content active">
+          <div class="field">
+            <label>Title (EN)</label>
+            <input type="text" id="cookie.title.en" placeholder="Enter title...">
+          </div>
+          <div class="field">
+            <label>Message (EN)</label>
+            <textarea id="cookie.message.en" placeholder="Enter message..."></textarea>
+          </div>
+          <div class="field">
+            <label>Accept Button (EN)</label>
+            <input type="text" id="cookie.accept.en" placeholder="Enter button text...">
+          </div>
+          <div class="field">
+            <label>Learn More Button (EN)</label>
+            <input type="text" id="cookie.more.en" placeholder="Enter button text...">
+          </div>
+        </div>
+        <div id="cookie-nl" class="lang-content">
+          <div class="field">
+            <label>Title (NL)</label>
+            <input type="text" id="cookie.title.nl" placeholder="Voer titel in...">
+          </div>
+          <div class="field">
+            <label>Message (NL)</label>
+            <textarea id="cookie.message.nl" placeholder="Voer bericht in..."></textarea>
+          </div>
+          <div class="field">
+            <label>Accept Button (NL)</label>
+            <input type="text" id="cookie.accept.nl" placeholder="Voer knoptekst in...">
+          </div>
+          <div class="field">
+            <label>Learn More Button (NL)</label>
+            <input type="text" id="cookie.more.nl" placeholder="Voer knoptekst in...">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="actions">
+    <span id="status" class="status">Ready to edit</span>
+    <div>
+      <button class="btn btn-secondary" onclick="loadContent()" style="margin-right: 0.5rem;">Reload</button>
+      <button class="btn btn-primary" onclick="saveContent()">Save Changes</button>
+    </div>
+  </div>
+  
+  <script>
+    let contentData = {};
+    
+    // Load content on page load
+    async function loadContent() {
+      try {
+        document.getElementById('loading').style.display = 'flex';
+        const response = await fetch('/api/content');
+        contentData = await response.json();
+        populateFields();
+        document.getElementById('loading').style.display = 'none';
+        updateStatus('Content loaded', 'success');
+      } catch (error) {
+        document.getElementById('loading').style.display = 'none';
+        updateStatus('Failed to load content', 'error');
+      }
+    }
+    
+    // Populate form fields with content
+    function populateFields() {
+      // Hero
+      document.getElementById('hero.subtitle.en').value = contentData.hero?.subtitle?.en || '';
+      document.getElementById('hero.subtitle.nl').value = contentData.hero?.subtitle?.nl || '';
+      
+      // Philosophy
+      document.getElementById('philosophy.title.en').value = contentData.philosophy?.title?.en || '';
+      document.getElementById('philosophy.title.nl').value = contentData.philosophy?.title?.nl || '';
+      document.getElementById('philosophy.subtitle.en').value = contentData.philosophy?.subtitle?.en || '';
+      document.getElementById('philosophy.subtitle.nl').value = contentData.philosophy?.subtitle?.nl || '';
+      document.getElementById('philosophy.description.en').value = contentData.philosophy?.description?.en || '';
+      document.getElementById('philosophy.description.nl').value = contentData.philosophy?.description?.nl || '';
+      
+      // Pipeline
+      document.getElementById('pipeline.title.en').value = contentData.pipeline?.title?.en || '';
+      document.getElementById('pipeline.title.nl').value = contentData.pipeline?.title?.nl || '';
+      document.getElementById('pipeline.subtitle.en').value = contentData.pipeline?.subtitle?.en || '';
+      document.getElementById('pipeline.subtitle.nl').value = contentData.pipeline?.subtitle?.nl || '';
+      document.getElementById('pipeline.start.en').value = contentData.pipeline?.start?.en || '';
+      document.getElementById('pipeline.start.nl').value = contentData.pipeline?.start?.nl || '';
+      document.getElementById('pipeline.end.en').value = contentData.pipeline?.end?.en || '';
+      document.getElementById('pipeline.end.nl').value = contentData.pipeline?.end?.nl || '';
+      
+      // Features
+      document.getElementById('features.title.en').value = contentData.features?.title?.en || '';
+      document.getElementById('features.title.nl').value = contentData.features?.title?.nl || '';
+      document.getElementById('features.subtitle.en').value = contentData.features?.subtitle?.en || '';
+      document.getElementById('features.subtitle.nl').value = contentData.features?.subtitle?.nl || '';
+      
+      // Render feature items
+      renderFeatureItems();
+      
+      // Footer
+      document.getElementById('footer.tagline.en').value = contentData.footer?.tagline?.en || '';
+      document.getElementById('footer.tagline.nl').value = contentData.footer?.tagline?.nl || '';
+      document.getElementById('footer.contact.en').value = contentData.footer?.contact?.en || '';
+      document.getElementById('footer.contact.nl').value = contentData.footer?.contact?.nl || '';
+      document.getElementById('footer.location.en').value = contentData.footer?.location?.en || '';
+      document.getElementById('footer.location.nl').value = contentData.footer?.location?.nl || '';
+      document.getElementById('footer.locationText.en').value = contentData.footer?.locationText?.en || '';
+      document.getElementById('footer.locationText.nl').value = contentData.footer?.locationText?.nl || '';
+      
+      // Cookie
+      document.getElementById('cookie.title.en').value = contentData.cookie?.title?.en || '';
+      document.getElementById('cookie.title.nl').value = contentData.cookie?.title?.nl || '';
+      document.getElementById('cookie.message.en').value = contentData.cookie?.message?.en || '';
+      document.getElementById('cookie.message.nl').value = contentData.cookie?.message?.nl || '';
+      document.getElementById('cookie.accept.en').value = contentData.cookie?.accept?.en || '';
+      document.getElementById('cookie.accept.nl').value = contentData.cookie?.accept?.nl || '';
+      document.getElementById('cookie.more.en').value = contentData.cookie?.more?.en || '';
+      document.getElementById('cookie.more.nl').value = contentData.cookie?.more?.nl || '';
+    }
+    
+    // Render feature items
+    function renderFeatureItems() {
+      const container = document.getElementById('features-list');
+      container.innerHTML = '';
+      
+      contentData.features?.items?.forEach((item, index) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'feature-item';
+        itemDiv.innerHTML = `
+          <h3>Feature ${index + 1}</h3>
+          <div class="lang-tabs">
+            <button class="lang-tab active" onclick="showLang('feature-${index}', 'en')">English</button>
+            <button class="lang-tab" onclick="showLang('feature-${index}', 'nl')">Nederlands</button>
+          </div>
+          <div id="feature-${index}-en" class="lang-content active">
+            <div class="field">
+              <label>Title (EN)</label>
+              <input type="text" id="feature.${index}.title.en" value="${item?.title?.en || ''}" placeholder="Enter title...">
+            </div>
+            <div class="field">
+              <label>Description (EN)</label>
+              <textarea id="feature.${index}.description.en" placeholder="Enter description...">${item?.description?.en || ''}</textarea>
+            </div>
+          </div>
+          <div id="feature-${index}-nl" class="lang-content">
+            <div class="field">
+              <label>Title (NL)</label>
+              <input type="text" id="feature.${index}.title.nl" value="${item?.title?.nl || ''}" placeholder="Voer titel in...">
+            </div>
+            <div class="field">
+              <label>Description (NL)</label>
+              <textarea id="feature.${index}.description.nl" placeholder="Voer beschrijving in...">${item?.description?.nl || ''}</textarea>
+            </div>
+          </div>
+        `;
+        container.appendChild(itemDiv);
+      });
+    }
+    
+    // Collect data from fields
+    function collectData() {
+      const data = JSON.parse(JSON.stringify(contentData));
+      
+      // Hero
+      data.hero.subtitle.en = document.getElementById('hero.subtitle.en').value;
+      data.hero.subtitle.nl = document.getElementById('hero.subtitle.nl').value;
+      
+      // Philosophy
+      data.philosophy.title.en = document.getElementById('philosophy.title.en').value;
+      data.philosophy.title.nl = document.getElementById('philosophy.title.nl').value;
+      data.philosophy.subtitle.en = document.getElementById('philosophy.subtitle.en').value;
+      data.philosophy.subtitle.nl = document.getElementById('philosophy.subtitle.nl').value;
+      data.philosophy.description.en = document.getElementById('philosophy.description.en').value;
+      data.philosophy.description.nl = document.getElementById('philosophy.description.nl').value;
+      
+      // Pipeline
+      data.pipeline.title.en = document.getElementById('pipeline.title.en').value;
+      data.pipeline.title.nl = document.getElementById('pipeline.title.nl').value;
+      data.pipeline.subtitle.en = document.getElementById('pipeline.subtitle.en').value;
+      data.pipeline.subtitle.nl = document.getElementById('pipeline.subtitle.nl').value;
+      data.pipeline.start.en = document.getElementById('pipeline.start.en').value;
+      data.pipeline.start.nl = document.getElementById('pipeline.start.nl').value;
+      data.pipeline.end.en = document.getElementById('pipeline.end.en').value;
+      data.pipeline.end.nl = document.getElementById('pipeline.end.nl').value;
+      
+      // Features
+      data.features.title.en = document.getElementById('features.title.en').value;
+      data.features.title.nl = document.getElementById('features.title.nl').value;
+      data.features.subtitle.en = document.getElementById('features.subtitle.en').value;
+      data.features.subtitle.nl = document.getElementById('features.subtitle.nl').value;
+      
+      // Feature items
+      data.features.items.forEach((item, index) => {
+        item.title.en = document.getElementById(`feature.${index}.title.en`)?.value || item.title.en;
+        item.title.nl = document.getElementById(`feature.${index}.title.nl`)?.value || item.title.nl;
+        item.description.en = document.getElementById(`feature.${index}.description.en`)?.value || item.description.en;
+        item.description.nl = document.getElementById(`feature.${index}.description.nl`)?.value || item.description.nl;
+      });
+      
+      // Footer
+      data.footer.tagline.en = document.getElementById('footer.tagline.en').value;
+      data.footer.tagline.nl = document.getElementById('footer.tagline.nl').value;
+      data.footer.contact.en = document.getElementById('footer.contact.en').value;
+      data.footer.contact.nl = document.getElementById('footer.contact.nl').value;
+      data.footer.location.en = document.getElementById('footer.location.en').value;
+      data.footer.location.nl = document.getElementById('footer.location.nl').value;
+      data.footer.locationText.en = document.getElementById('footer.locationText.en').value;
+      data.footer.locationText.nl = document.getElementById('footer.locationText.nl').value;
+      
+      // Cookie
+      data.cookie.title.en = document.getElementById('cookie.title.en').value;
+      data.cookie.title.nl = document.getElementById('cookie.title.nl').value;
+      data.cookie.message.en = document.getElementById('cookie.message.en').value;
+      data.cookie.message.nl = document.getElementById('cookie.message.nl').value;
+      data.cookie.accept.en = document.getElementById('cookie.accept.en').value;
+      data.cookie.accept.nl = document.getElementById('cookie.accept.nl').value;
+      data.cookie.more.en = document.getElementById('cookie.more.en').value;
+      data.cookie.more.nl = document.getElementById('cookie.more.nl').value;
+      
+      return data;
+    }
+    
+    // Save content
+    async function saveContent() {
+      try {
+        updateStatus('Saving...', '');
+        const data = collectData();
+        const response = await fetch('/api/content', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        
+        if (response.ok) {
+          contentData = data;
+          updateStatus('Changes saved successfully!', 'success');
+        } else {
+          updateStatus('Failed to save changes', 'error');
+        }
+      } catch (error) {
+        updateStatus('Failed to save changes', 'error');
+      }
+    }
+    
+    // Show section
+    function showSection(sectionId) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+      document.getElementById(sectionId).classList.add('active');
+      event.target.classList.add('active');
+    }
+    
+    // Show language tab
+    function showLang(prefix, lang) {
+      const container = document.getElementById(`${prefix}-${lang}`).parentElement;
+      container.querySelectorAll('.lang-content').forEach(c => c.classList.remove('active'));
+      container.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById(`${prefix}-${lang}`).classList.add('active');
+      event.target.classList.add('active');
+    }
+    
+    // Update status
+    function updateStatus(message, type) {
+      const status = document.getElementById('status');
+      status.textContent = message;
+      status.className = 'status ' + type;
+      if (type === 'success') {
+        setTimeout(() => {
+          status.textContent = 'Ready to edit';
+          status.className = 'status';
+        }, 3000);
+      }
+    }
+    
+    // Load content on page load
+    loadContent();
+  </script>
+</body>
+</html>

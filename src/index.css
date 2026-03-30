@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+  }
+}
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-white text-black antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-feature-settings: 'ss01' on, 'ss02' on, 'cv01' on, 'cv03' on;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  
+  ::selection {
+    background: #000;
+    color: #fff;
+  }
+}
+
+/* Typography Scale */
+.text-display {
+  font-size: clamp(3rem, 12vw, 10rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+.text-headline {
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.text-title {
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.text-body {
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.6;
+}
+
+.text-caption {
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.text-mono {
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* Section Numbering */
+.section-number {
+  @apply text-mono text-black/40;
+}
+
+/* Pipeline Box */
+.pipeline-box {
+  @apply border border-black/20 bg-white p-4 md:p-5;
+  transition: all 0.3s ease;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+}
+
+.pipeline-box:hover {
+  @apply border-black/60;
+}
+
+.pipeline-box.gate {
+  @apply bg-black text-white border-black;
+}
+
+.pipeline-box.start {
+  @apply border-black/40;
+}
+
+.pipeline-box.end {
+  @apply border-black/40 bg-neutral-50;
+}
+
+/* Grid Lines */
+.grid-line-h {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(0,0,0,0.1) 20%, rgba(0,0,0,0.1) 80%, transparent);
+}
+
+/* Subtle Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,0,0,0.4);
+}
+
+/* Language switcher */
+.lang-switcher {
+  @apply flex items-center gap-2 text-caption;
+}
+
+.lang-switcher button {
+  @apply px-2 py-1 transition-colors;
+}
+
+.lang-switcher button.active {
+  @apply bg-black text-white;
+}
+
+.lang-switcher button:not(.active) {
+  @apply text-black/40 hover:text-black;
+}
+
+/* Responsive pipeline */
+@media (max-width: 768px) {
+  .pipeline-box {
+    min-height: 100px;
+    padding: 0.75rem;
+  }
+  
+  .pipeline-box .text-title {
+    font-size: 0.875rem;
+  }
+  
+  .pipeline-box .text-caption {
+    font-size: 0.625rem;
+  }
+}

@@ -1,0 +1,168 @@
+{
+  "hero": {
+    "subtitle": {
+      "en": "AI-powered social media automation with human oversight at every gate.",
+      "nl": "AI-gestuurde social media automatisering met menselijke controle bij elke stap."
+    }
+  },
+  "philosophy": {
+    "title": {
+      "en": "Human-in-the-loop.",
+      "nl": "Mens-in-de-lus."
+    },
+    "subtitle": {
+      "en": "Every decision gated.",
+      "nl": "Elke beslissing gecontroleerd."
+    },
+    "description": {
+      "en": "AI proposes. AI produces. AI flags. But you decide. Every piece of content passes through approval gates. Nothing goes live without your sign-off.",
+      "nl": "AI stelt voor. AI produceert. AI signaleert. Maar jij beslist. Elk stukje content doorloopt goedkeuringspoorten. Niets gaat live zonder jouw akkoord."
+    }
+  },
+  "pipeline": {
+    "title": {
+      "en": "The Pipeline.",
+      "nl": "De Pijplijn."
+    },
+    "subtitle": {
+      "en": "From onboarding to optimization. Every step traceable.",
+      "nl": "Van onboarding tot optimalisatie. Elke stap traceerbaar."
+    },
+    "start": {
+      "en": "Start",
+      "nl": "Start"
+    },
+    "end": {
+      "en": "End",
+      "nl": "Einde"
+    }
+  },
+  "features": {
+    "title": {
+      "en": "What you get.",
+      "nl": "Wat je krijgt."
+    },
+    "subtitle": {
+      "en": "Everything you need to run social at scale.",
+      "nl": "Alles wat je nodig hebt om social op schaal te draaien."
+    },
+    "items": [
+      {
+        "title": {
+          "en": "Brand Kit",
+          "nl": "Brand Kit"
+        },
+        "description": {
+          "en": "Colors, fonts, tone of voice. Locked in one place.",
+          "nl": "Kleuren, fonts, tone of voice. Op één plek vastgelegd."
+        }
+      },
+      {
+        "title": {
+          "en": "Content Library",
+          "nl": "Content Bibliotheek"
+        },
+        "description": {
+          "en": "All your assets, organized and rights-managed.",
+          "nl": "Al je assets, georganiseerd en rechten beheerd."
+        }
+      },
+      {
+        "title": {
+          "en": "Format Templates",
+          "nl": "Format Templates"
+        },
+        "description": {
+          "en": "Best performing templates personalized to your brand.",
+          "nl": "Best presterende templates gepersonaliseerd voor jouw merk."
+        }
+      },
+      {
+        "title": {
+          "en": "AI Drafting",
+          "nl": "AI Drafting"
+        },
+        "description": {
+          "en": "Copy, media plans, hashtags. Generated in seconds.",
+          "nl": "Copy, media plannen, hashtags. In seconden gegenereerd."
+        }
+      },
+      {
+        "title": {
+          "en": "Approval Gates",
+          "nl": "Goedkeuringspoorten"
+        },
+        "description": {
+          "en": "You approve every format, draft, and post.",
+          "nl": "Jij keurt elk format, draft en post goed."
+        }
+      },
+      {
+        "title": {
+          "en": "Scheduling",
+          "nl": "Planning"
+        },
+        "description": {
+          "en": "Best-time posting, automated.",
+          "nl": "Best-time posting, geautomatiseerd."
+        }
+      },
+      {
+        "title": {
+          "en": "Analytics",
+          "nl": "Analytics"
+        },
+        "description": {
+          "en": "Weekly insights that drive better content.",
+          "nl": "Wekelijkse inzichten die betere content opleveren."
+        }
+      },
+      {
+        "title": {
+          "en": "Community",
+          "nl": "Community"
+        },
+        "description": {
+          "en": "Moderation with human oversight.",
+          "nl": "Moderatie met menselijke controle."
+        }
+      }
+    ]
+  },
+  "footer": {
+    "tagline": {
+      "en": "AI-powered social media automation with human oversight at every gate.",
+      "nl": "AI-gestuurde social media automatisering met menselijke controle bij elke stap."
+    },
+    "contact": {
+      "en": "Contact",
+      "nl": "Contact"
+    },
+    "location": {
+      "en": "Location",
+      "nl": "Locatie"
+    },
+    "locationText": {
+      "en": "Worldwide\nbased in Rotterdam, Netherlands",
+      "nl": "Wereldwijd actief\ngevestigd in Rotterdam, Nederland"
+    }
+  },
+  "cookie": {
+    "title": {
+      "en": "Cookies",
+      "nl": "Cookies"
+    },
+    "message": {
+      "en": "We use only essential cookies to make this website work. No tracking, no analytics.",
+      "nl": "We gebruiken alleen essentiële cookies om deze website te laten werken. Geen tracking, geen analytics."
+    },
+    "accept": {
+      "en": "Accept",
+      "nl": "Accepteren"
+    },
+    "more": {
+      "en": "Learn more",
+      "nl": "Meer info"
+    }
+  }
+}
